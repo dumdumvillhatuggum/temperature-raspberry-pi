@@ -1,7 +1,18 @@
-import sys
+import argparse
 from gpiozero import CPUTemperature
 from time import sleep, strftime, time
 
+parser = argparse.ArgumentParser(
+    prog='temp'
+)
+parser.add_argument('-t', '--timestamp', action='store_true')
+parser.parse_args('t')
+
+if(t):
+    print("flag recognozed")
+else:
+    print("no flag")
+    
 cpu = CPUTemperature()
 
 def write_temp(temp):
