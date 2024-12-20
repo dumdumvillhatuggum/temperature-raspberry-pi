@@ -4,19 +4,36 @@ from time import sleep, strftime, time
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--timestamp', action='store_true')
-#parser.add_argument('-o', '--output-dir')
-args = parser.parse_args('-t'.split())
+parser.add_argument('-v', '--verbose', action='store_true')
+parser.add_argument('-f', '--filename', action='store', default="cputemp.csv")
+parser.add_argument('-p', '--path', action='store', default="")
+args = parser.parse_args()
 
-if(args.timestamp == True):
-    print("flag recognozed")
-if(args.timestamp == False):
-    print("no flag")
+tmp = ""
+if(args.path[-1] != "/"):
+    tmp = "/"
+FILE = args.path + tmp + args.filename
 
-cpu = CPUTemperature()
+print("FILE: ", FILE)
+
+if(args.verbose):
+    print("Program started at " + strftime("%Y-%m-%d %H:%M:%S"))
+    print("Arguments:")
+    print("timestamp:", args.timestamp)
+    print("verbose:", args.verbose)
+    print("file: ", args.file)
+    print()
 
 def write_temp(temp):
     with open("cputemp.csv", "a") as log:
-        log.write("{0},{1}\n".format(strftime("%Y-%m-%d %H:%M:%S"),str(temp)))
+        if args.timestamp:
+            lineToWrite = "{0},{1}\n".format(strftime("%Y-%m-%d %H:%M:%S"),str(temp))
+        else:
+            lineToWrite = "{0}\n".format(str(temp))
+        log.write(lineToWrite)
+        # TODO if verbose print temp
+
+write_temp(69)
 
 while True:
     temp = cpu.temperature
