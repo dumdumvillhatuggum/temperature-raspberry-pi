@@ -7,7 +7,7 @@ parser.add_argument('-t', '--timestamp', action='store_true')
 #parser.add_argument('-o', '--output-dir')
 args = parser.parse_args('-t'.split())
 
-if(args.t):
+if(args.timestamp):
     print("flag recognozed")
 else:
     print("no flag")
