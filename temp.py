@@ -53,7 +53,7 @@ while (i <= SECONDS_CONST):
     write_temp(temp)
     i += 1
     sleep(1)
-print("Stopped logging at " + strftime("%Y-%m-%d %H:%M:%S") + "after " + int(i) + "seconds")
+print("Stopped logging at " + strftime("%Y-%m-%d %H:%M:%S") + "after " + str(i) + "seconds")
 
 stdout, stderr = stress_process.communicate()
 print("-------------")
