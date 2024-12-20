@@ -13,6 +13,7 @@ parser.add_argument('-t', '--threads', action='store', default=str(multiprocessi
 parser.add_argument('-s', '--seconds', action='store', default="10")
 args = parser.parse_args()
 
+SECONDS_CONST = args.seconds
 STRESS_COMMAND = ["sysbench", "cpu", "run", 
 "--threads=" + args.threads, 
 "--time=" + args.seconds
@@ -49,7 +50,7 @@ print(ls.stdout)
 write_temp("End stress")
 
 i = 0
-while (i <= args.seconds):
+while (i <= SECONDS_CONST):
     temp = cpu.temperature
     write_temp(temp)
     i += 1
