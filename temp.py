@@ -32,7 +32,7 @@ if(args.verbose):
     print("Arguments:")
     print("date:", args.date)
     print("verbose:", args.verbose)
-    print("file: ", args.file)
+    print("file: ", args.filename)
     print()
 
 def write_temp(temp):
