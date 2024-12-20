@@ -24,7 +24,7 @@ STRESS_COMMAND = ["sysbench", "cpu", "run",
 ]
 
 def ts():
-    return strftime("%Y-%m-%d %H:%M:%S")
+    return strftime("%Y-%m-%d %H:%M:%S ")
 
 def run_stress(command, delay):
     print(ts() + "Sleeping for " + args.beginoffset + " seconds (beginoffset)")
@@ -35,12 +35,12 @@ def run_stress(command, delay):
     
     stdout, stderr = stress_process.communicate()
     if(args.verbose):
-        print("-------------")
-        print("stdout:")
+        print("-------------syslog stdout-------------")
         print(stdout)
-        print("-------------")
-        print("stderr:")
+        print("---------------------------------------")
+        print("-------------syslog stderr-------------")
         print(stderr)
+        print("---------------------------------------")
 
 tmp = ""
 if(args.path):
@@ -57,7 +57,7 @@ if(args.verbose):
     print()
 
 def write_temp(temp):
-    with open("cputemp.csv", "a") as log:
+    with open(args.filename, "a") as log:
         if args.date:
             lineToWrite = "{0} {1},".format(strftime("%Y-%m-%d %H:%M:%S"),str(temp))
         else:
