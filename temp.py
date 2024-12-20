@@ -11,7 +11,7 @@ parser.add_argument('-f', '--filename', action='store', default="cputemp.csv")
 parser.add_argument('-p', '--path', action='store', default="")
 parser.add_argument('-t', '--threads', action='store', default=str(multiprocessing.cpu_count()))
 parser.add_argument('-s', '--seconds', action='store', default="10")
-parser.add_argument('-e', '--endoffset', action='store', default="2")
+parser.add_argument('-c', '--cooldown', action='store', default="2")
 parser.add_argument('-b', '--beginoffset', action='store', default="2")
 args = parser.parse_args()
 
@@ -38,13 +38,14 @@ if(args.verbose):
 def write_temp(temp):
     with open("cputemp.csv", "a") as log:
         if args.date:
-            lineToWrite = "{0},{1}\n".format(strftime("%Y-%m-%d %H:%M:%S"),str(temp))
+            lineToWrite = "{0},{1}".format(strftime("%Y-%m-%d %H:%M:%S"),str(temp))
         else:
-            lineToWrite = "{0}\n".format(str(temp))
+            lineToWrite = "{0}".format(str(temp))
         log.write(lineToWrite)
 
 cpu = CPUTemperature()
 
+print("Sleeping for " + args.beginoffset + " seconds (beginoffset)")
 sleep(int(args.beginoffset))
 stress_process = subprocess.Popen(STRESS_COMMAND, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
@@ -66,5 +67,5 @@ if(args.verbose):
     print("stderr:")
     print(stderr)
 
-print("Sleeping for " + args.endoffset + " seconds (endoffset)")
+print("Sleeping for " + args.cooldown + " seconds (cooldown)")
 sleep(int(args.beginoffset))
