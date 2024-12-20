@@ -48,7 +48,7 @@ write_temp(69)
 ls = subprocess.run(STRESS_COMMAND, capture_output=True, text=True)
 print(ls.stdout)
 
-#while True:
-#    temp = cpu.temperature
-#    write_temp(temp)
-#    sleep(1)
+while True:
+    temp = cpu.temperature
+    write_temp(temp)
+    sleep(1)
