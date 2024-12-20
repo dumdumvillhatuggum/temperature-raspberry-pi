@@ -48,7 +48,7 @@ def write_temp(temp):
 cpu = CPUTemperature()
 
 print("Calling stress_thread")
-stress_thread = threading.Thread(taget=run_stress, args=(STRESS_COMMAND, args.beginoffset))
+stress_thread = threading.Thread(taget=run_stress(), args=(STRESS_COMMAND, args.beginoffset))
 stress_thread.start()
 print("stress_thread called")
 
