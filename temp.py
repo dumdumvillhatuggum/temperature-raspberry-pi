@@ -2,6 +2,7 @@ import argparse
 import glob
 import subprocess
 import threading
+import multiprocessing
 from gpiozero import CPUTemperature
 from time import sleep, strftime, time
 
