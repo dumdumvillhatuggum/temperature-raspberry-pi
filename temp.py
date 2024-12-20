@@ -11,5 +11,4 @@ def write_temp(temp):
 while True:
     temp = cpu.temperature
     write_temp(temp)
-    time.sleep(1)
-    
+    sleep(1)
