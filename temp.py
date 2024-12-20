@@ -44,7 +44,7 @@ def write_temp(temp):
 cpu = CPUTemperature()
 
 write_temp("Start stress")
-ls = subprocess.Popen(STRESS_COMMAND, capture_output=True, text=True)
+ls = subprocess.Popen(STRESS_COMMAND,  stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 print(ls.stdout)
 write_temp("End stress")
 
