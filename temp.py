@@ -7,9 +7,9 @@ parser.add_argument('-t', '--timestamp', action='store_true')
 #parser.add_argument('-o', '--output-dir')
 args = parser.parse_args('-t'.split())
 
-if(args.timestamp):
+if(args.timestamp == True):
     print("flag recognozed")
-else:
+if(args.timestamp == False):
     print("no flag")
 
 cpu = CPUTemperature()
