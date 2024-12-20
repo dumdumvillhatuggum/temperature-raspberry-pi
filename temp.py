@@ -4,8 +4,6 @@ import multiprocessing
 from gpiozero import CPUTemperature
 from time import sleep, strftime, time
 
-MACHINE_THREADS = multiprocessing.cpu_count()
-
 parser = argparse.ArgumentParser()
 parser.add_argument('-d', '--date', action='store_true')
 parser.add_argument('-v', '--verbose', action='store_true')
@@ -45,9 +43,10 @@ def write_temp(temp):
 
 cpu = CPUTemperature()
 
-write_temp("Starting stress now")
+write_temp("Start stress")
 ls = subprocess.run(STRESS_COMMAND, capture_output=True, text=True)
 print(ls.stdout)
+write_temp("End stress")
 
 while True:
     temp = cpu.temperature
