@@ -7,12 +7,6 @@ parser.add_argument('-t', '--timestamp', action='store_true')
 #parser.add_argument('-o', '--output-dir')
 args = parser.parse_args('-t'.split())
 
-<<<<<<< Updated upstream
-if(args.timestamp):
-    print("flag recognozed")
-else:
-    print("no flag")
-=======
 STRESS_COMMAND = ["sysbench", "cpu", "run", 
 "--threads=" + args.threads, 
 "--time=" + args.seconds
@@ -42,7 +36,6 @@ def write_temp(temp):
         log.write(lineToWrite)
         # TODO if verbose print temp
 print("End stress")
->>>>>>> Stashed changes
 
 cpu = CPUTemperature()
 
