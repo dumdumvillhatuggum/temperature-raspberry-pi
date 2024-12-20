@@ -1,7 +1,7 @@
 import argparse
 import glob
 import subprocess
-import multiprocessing
+import threading
 from gpiozero import CPUTemperature
 from time import sleep, strftime, time
 
@@ -28,9 +28,6 @@ if(args.path):
         tmp = "/"
 FILE = args.path + tmp + args.filename
 
-glb = glob(FILE)
-print("glob: " , glb)
-
 if(args.verbose):
     print("Program started at " + strftime("%Y-%m-%d %H:%M:%S"))
     print("Arguments:")
@@ -49,9 +46,10 @@ def write_temp(temp):
 
 cpu = CPUTemperature()
 
-print("Sleeping for " + args.beginoffset + " seconds (beginoffset)")
-sleep(int(args.beginoffset))
-stress_process = subprocess.Popen(STRESS_COMMAND, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+print("Calling stress_thread")
+stress_thread = threading.Thread(taget=run_stress, args=(STRESS_COMMAND, args.beginoffset))
+stress_thread.start()
+print("stress_thread called")
 
 i = 0
 print("Starting logging at " + strftime("%Y-%m-%d %H:%M:%S"))
@@ -62,14 +60,20 @@ while (i <= SECONDS_CONST):
     sleep(1)
 print("Stopped logging at " + strftime("%Y-%m-%d %H:%M:%S") + " after " + str(i) + " seconds")
 
-stdout, stderr = stress_process.communicate()
-if(args.verbose):
-    print("-------------")
-    print("stdout:")
-    print(stdout)
-    print("-------------")
-    print("stderr:")
-    print(stderr)
-
 print("Sleeping for " + args.cooldown + " seconds (cooldown)")
 sleep(int(args.beginoffset))
+
+def run_stress(command, delay):
+    print("Sleeping for " + args.beginoffset + " seconds (beginoffset)")
+    sleep(int(args.beginoffset))
+
+    stress_process = subprocess.Popen(STRESS_COMMAND, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    
+    stdout, stderr = stress_process.communicate()
+    if(args.verbose):
+        print("-------------")
+        print("stdout:")
+        print(stdout)
+        print("-------------")
+        print("stderr:")
+        print(stderr)
