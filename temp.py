@@ -37,14 +37,15 @@ if(args.verbose):
 def write_temp(temp):
     with open("cputemp.csv", "a") as log:
         if args.date:
-            lineToWrite = "{0},{1}\n".format(strftime("%Y-%m-%d %H:%M:%S"),str(temp))
+            lineToWrite = "{0},{1}\n".format(strftime("%Y-%m-%d %H:%M:%S"),"      ",str(temp))
         else:
             lineToWrite = "{0}\n".format(str(temp))
         log.write(lineToWrite)
         # TODO if verbose print temp
 
-write_temp(69)
+cpu = CPUTemperature()
 
+write_temp("Starting stress now")
 ls = subprocess.run(STRESS_COMMAND, capture_output=True, text=True)
 print(ls.stdout)
 
