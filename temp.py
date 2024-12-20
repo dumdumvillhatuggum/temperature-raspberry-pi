@@ -4,7 +4,7 @@ from time import sleep, strftime, time
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--timestamp', action='store_true')
-parser.parse_args('-t')
+parser.parse_args('-t'.split())
 
 if(t):
     print("flag recognozed")
