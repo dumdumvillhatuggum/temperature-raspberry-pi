@@ -23,10 +23,14 @@ STRESS_COMMAND = ["sysbench", "cpu", "run",
 "--time=" + args.seconds
 ]
 
+def ts():
+    return strftime("%Y-%m-%d %H:%M:%S")
+
 def run_stress(command, delay):
-    print("Sleeping for " + args.beginoffset + " seconds (beginoffset)")
+    print(ts() + "Sleeping for " + args.beginoffset + " seconds (beginoffset)")
     sleep(int(args.beginoffset))
 
+    print(ts() + "Beggining stress test now")
     stress_process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     
     stdout, stderr = stress_process.communicate()
@@ -45,7 +49,7 @@ if(args.path):
 FILE = args.path + tmp + args.filename
 
 if(args.verbose):
-    print("Program started at " + strftime("%Y-%m-%d %H:%M:%S"))
+    print("Program started at " + ts())
     print("Arguments:")
     print("date:", args.date)
     print("verbose:", args.verbose)
@@ -62,19 +66,17 @@ def write_temp(temp):
 
 cpu = CPUTemperature()
 
-print("Calling stress_thread")
 stress_thread = threading.Thread(target=run_stress, args=(STRESS_COMMAND, args.beginoffset))
 stress_thread.start()
-print("stress_thread called")
 
 i = 0
-print("Starting logging at " + strftime("%Y-%m-%d %H:%M:%S"))
+print(ts() + "Starting logging")
 while (i <= SECONDS_CONST):
     temp = cpu.temperature
     write_temp(temp)
     i += 1
     sleep(1)
-print("Stopped logging at " + strftime("%Y-%m-%d %H:%M:%S") + " after " + str(i) + " seconds")
+print(ts() + "Stopped logging at " + " after " + str(i) + " seconds")
 
-print("Sleeping for " + args.cooldown + " seconds (cooldown)")
+print(ts() + "Sleeping for " + args.cooldown + " seconds (cooldown)")
 sleep(int(args.beginoffset))
