@@ -35,7 +35,7 @@ if(args.verbose):
 def write_temp(temp):
     with open("cputemp.csv", "a") as log:
         if args.date:
-            lineToWrite = "{0},{1}\n".format(strftime("%Y-%m-%d %H:%M:%S"),"      ",str(temp))
+            lineToWrite = "{0},{1},{2}\n".format(strftime("%Y-%m-%d %H:%M:%S"),"      ",str(temp))
         else:
             lineToWrite = "{0}\n".format(str(temp))
         log.write(lineToWrite)
@@ -44,11 +44,13 @@ def write_temp(temp):
 cpu = CPUTemperature()
 
 write_temp("Start stress")
-ls = subprocess.run(STRESS_COMMAND, capture_output=True, text=True)
+ls = subprocess.Popen(STRESS_COMMAND, capture_output=True, text=True)
 print(ls.stdout)
 write_temp("End stress")
 
-while True:
+i = 0
+while (i <= args.seconds):
     temp = cpu.temperature
     write_temp(temp)
+    i += 1
     sleep(1)
