@@ -12,9 +12,9 @@ parser.add_argument('-v', '--verbose', action='store_true')
 parser.add_argument('-f', '--filename', action='store', default="cputemp.csv")
 parser.add_argument('-p', '--path', action='store', default="")
 parser.add_argument('-t', '--threads', action='store', default=str(multiprocessing.cpu_count()))
-parser.add_argument('-s', '--seconds', action='store', default="10")
-parser.add_argument('-c', '--cooldown', action='store', default="2")
-parser.add_argument('-b', '--beginoffset', action='store', default="2")
+parser.add_argument('-s', '--seconds', action='store', default="300")
+parser.add_argument('-c', '--cooldown', action='store', default="15")
+parser.add_argument('-b', '--beginoffset', action='store', default="120")
 args = parser.parse_args()
 
 SECONDS_CONST = int(args.seconds)
@@ -35,10 +35,10 @@ def run_stress(command, delay):
     
     stdout, stderr = stress_process.communicate()
     if(args.verbose):
-        print("-------------syslog stdout-------------")
+        print("-------------sysbench stdout-------------")
         print(stdout)
         print("---------------------------------------")
-        print("-------------syslog stderr-------------")
+        print("-------------sysbench stderr-------------")
         print(stderr)
         print("---------------------------------------")
 
