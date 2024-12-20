@@ -6,7 +6,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--timestamp', action='store_true')
 args = parser.parse_args('-t'.split())
 
-if(args[0]):
+if(args.t):
     print("flag recognozed")
 else:
     print("no flag")
