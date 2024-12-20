@@ -13,7 +13,7 @@ parser.add_argument('-t', '--threads', action='store', default=str(multiprocessi
 parser.add_argument('-s', '--seconds', action='store', default="10")
 args = parser.parse_args()
 
-SECONDS_CONST = args.seconds
+SECONDS_CONST = int(args.seconds)
 STRESS_COMMAND = ["sysbench", "cpu", "run", 
 "--threads=" + args.threads, 
 "--time=" + args.seconds
