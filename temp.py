@@ -1,4 +1,5 @@
 import argparse
+import subprocess
 from gpiozero import CPUTemperature
 from time import sleep, strftime, time
 
@@ -10,8 +11,9 @@ parser.add_argument('-p', '--path', action='store', default="")
 args = parser.parse_args()
 
 tmp = ""
-if(args.path[-1] != "/"):
-    tmp = "/"
+if(args.path):
+    if(args.path[-1] != "/"):
+        tmp = "/"
 FILE = args.path + tmp + args.filename
 
 print("FILE: ", FILE)
@@ -35,7 +37,10 @@ def write_temp(temp):
 
 write_temp(69)
 
-while True:
-    temp = cpu.temperature
-    write_temp(temp)
-    sleep(1)
+ls = subprocess.run(["sysbench", "cpu", "run", "--threads=4", "--time=10"], shell=True, capture_output=True, text=True)
+print(ls.stdout)
+
+#while True:
+#    temp = cpu.temperature
+#    write_temp(temp)
+#    sleep(1)
