@@ -23,6 +23,21 @@ STRESS_COMMAND = ["sysbench", "cpu", "run",
 "--time=" + args.seconds
 ]
 
+def run_stress(command, delay):
+    print("Sleeping for " + args.beginoffset + " seconds (beginoffset)")
+    sleep(int(args.beginoffset))
+
+    stress_process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    
+    stdout, stderr = stress_process.communicate()
+    if(args.verbose):
+        print("-------------")
+        print("stdout:")
+        print(stdout)
+        print("-------------")
+        print("stderr:")
+        print(stderr)
+
 tmp = ""
 if(args.path):
     if(args.path[-1] != "/"):
@@ -48,7 +63,7 @@ def write_temp(temp):
 cpu = CPUTemperature()
 
 print("Calling stress_thread")
-stress_thread = threading.Thread(taget=run_stress(), args=(STRESS_COMMAND, args.beginoffset))
+stress_thread = threading.Thread(taget=run_stress, args=(STRESS_COMMAND, args.beginoffset))
 stress_thread.start()
 print("stress_thread called")
 
@@ -63,18 +78,3 @@ print("Stopped logging at " + strftime("%Y-%m-%d %H:%M:%S") + " after " + str(i)
 
 print("Sleeping for " + args.cooldown + " seconds (cooldown)")
 sleep(int(args.beginoffset))
-
-def run_stress(command, delay):
-    print("Sleeping for " + args.beginoffset + " seconds (beginoffset)")
-    sleep(int(args.beginoffset))
-
-    stress_process = subprocess.Popen(STRESS_COMMAND, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    
-    stdout, stderr = stress_process.communicate()
-    if(args.verbose):
-        print("-------------")
-        print("stdout:")
-        print(stdout)
-        print("-------------")
-        print("stderr:")
-        print(stderr)
