@@ -3,6 +3,8 @@ import subprocess
 from gpiozero import CPUTemperature
 from time import sleep, strftime, time
 
+STRESS_COMMAND = ["sysbench", "cpu", "run", "--threads=4", "--time=10"]
+
 parser = argparse.ArgumentParser()
 parser.add_argument('-t', '--timestamp', action='store_true')
 parser.add_argument('-v', '--verbose', action='store_true')
@@ -37,7 +39,7 @@ def write_temp(temp):
 
 write_temp(69)
 
-ls = subprocess.run(["sysbench", "cpu", "run", "--threads=4", "--time=10"], shell=True, capture_output=True, text=True)
+ls = subprocess.run(STRESS_COMMAND, shell=True, capture_output=True, text=True)
 print(ls.stdout)
 
 #while True:
