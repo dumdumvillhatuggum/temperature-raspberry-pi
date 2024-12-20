@@ -1,4 +1,5 @@
 import argparse
+import glob
 import subprocess
 import multiprocessing
 from gpiozero import CPUTemperature
@@ -27,6 +28,9 @@ if(args.path):
         tmp = "/"
 FILE = args.path + tmp + args.filename
 
+glb = glob(FILE)
+print("glob: " , glb)
+
 if(args.verbose):
     print("Program started at " + strftime("%Y-%m-%d %H:%M:%S"))
     print("Arguments:")
@@ -38,9 +42,9 @@ if(args.verbose):
 def write_temp(temp):
     with open("cputemp.csv", "a") as log:
         if args.date:
-            lineToWrite = "{0},{1}".format(strftime("%Y-%m-%d %H:%M:%S"),str(temp))
+            lineToWrite = "{0} {1},".format(strftime("%Y-%m-%d %H:%M:%S"),str(temp))
         else:
-            lineToWrite = "{0}".format(str(temp))
+            lineToWrite = "{0},".format(str(temp))
         log.write(lineToWrite)
 
 cpu = CPUTemperature()
