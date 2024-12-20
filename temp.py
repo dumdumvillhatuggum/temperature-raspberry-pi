@@ -45,7 +45,7 @@ def write_temp(temp):
 
 cpu = CPUTemperature()
 
-sleep(args.beginoffset)
+sleep(int(args.beginoffset))
 stress_process = subprocess.Popen(STRESS_COMMAND, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
 i = 0
@@ -67,4 +67,4 @@ if(args.verbose):
     print(stderr)
 
 print("Sleeping for " + args.endoffset + " seconds (endoffset)")
-sleep(args.beginoffset)
+sleep(int(args.beginoffset))
